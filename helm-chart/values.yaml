@@ -1,0 +1,23 @@
+app:
+  name: hello-world
+  image: "sam3ctc/hello-world-app:latest"
+  replicas: 1
+  containerPort: 8080
+
+mysql:
+  name: mysql
+  image: "mysql:5.7"
+  rootPassword: "sam123"
+  user: "sumit"
+  userPassword: "sumit123"
+  database: "hello-sql"
+  storageSize: "1Gi"
+  storageClass: "azurefile-sc"
+
+ingress:
+  enabled: true
+    #host: "hello-world.yourdomain.com"
+
+service:
+  type: ClusterIP
+  port: 8080

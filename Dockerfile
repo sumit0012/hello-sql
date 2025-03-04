@@ -1,23 +1,25 @@
-# Use a lightweight base image
+# Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy application files
-COPY app.py requirements.txt /app/
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Install dependencies
+# Install the required Python packages
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Set environment variables
-ENV MYSQL_SERVER="mysql"
-ENV MYSQL_USER="root"
-ENV MYSQL_PASSWORD="password"
-ENV MYSQL_DB="test_db"
-
-# Expose port
+# Expose port 8080 to be accessible from outside the container
 EXPOSE 8080
 
-# Run the application
+# Set environment variables (can be overridden at runtime)
+ENV DB_HOST=mysql-service.default.svc.cluster.local
+ENV DB_ROOT_USER=root
+ENV DB_ROOT_PASSWORD=sam123
+ENV DB_NAME=hello-sql
+ENV NEW_USER=sumit
+ENV NEW_PASSWORD=sumit123
+
+# Run the application when the container starts
 CMD ["python", "app.py"]

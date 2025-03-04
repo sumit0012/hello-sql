@@ -1,32 +1,48 @@
 from flask import Flask, jsonify
 import mysql.connector
-import os
 
 app = Flask(__name__)
 
-# Database connection settings from environment variables
-db_config = {
-    "host": os.getenv("MYSQL_SERVER", "localhost"),
-    "user": os.getenv("MYSQL_USER", "root"),
-    "password": os.getenv("MYSQL_PASSWORD", "password"),
-    "database": os.getenv("MYSQL_DB", "test_db")
-}
+# MySQL Configuration
+DB_HOST = "mysql-service.default.svc.cluster.local"
+DB_ROOT_USER = "root"
+DB_ROOT_PASSWORD = "sam123"
+DB_NAME = "hello-sql"  # Change this to your preferred database name
+NEW_USER = "sumit"
+NEW_PASSWORD = "sumit123"
 
-def get_message():
+def setup_database():
     try:
-        conn = mysql.connector.connect(**db_config)
+        # Connect to MySQL as root
+        conn = mysql.connector.connect(
+            host=DB_HOST,
+            user=DB_ROOT_USER,
+            password=DB_ROOT_PASSWORD
+        )
         cursor = conn.cursor()
-        cursor.execute("SELECT message FROM messages LIMIT 1;")
-        result = cursor.fetchone()
+
+        # Step 1: Create the database if it doesn’t exist
+        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DB_NAME};")
+
+        # Step 2: Create the user if it doesn’t exist
+        cursor.execute(f"CREATE USER IF NOT EXISTS '{NEW_USER}'@'%' IDENTIFIED BY '{NEW_PASSWORD}';")
+
+        # Step 3: Grant privileges to the user on the database
+        cursor.execute(f"GRANT ALL PRIVILEGES ON {DB_NAME}.* TO '{NEW_USER}'@'%';")
+        cursor.execute("FLUSH PRIVILEGES;")
+
+        conn.commit()
         cursor.close()
         conn.close()
-        return result[0] if result else "No message found"
-    except Exception as e:
-        return str(e)
+        return f"Database '{DB_NAME}' and user '{NEW_USER}' created successfully."
 
-@app.route('/')
-def hello():
-    return jsonify(message=get_message())
+    except mysql.connector.Error as err:
+        return f"Error: {err}"
+
+@app.route("/")
+def index():
+    result = setup_database()
+    return jsonify({"message": result})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+    app.run(host="0.0.0.0", port=8080, debug=True)

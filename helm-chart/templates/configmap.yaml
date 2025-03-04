@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  MYSQL_HOST: "mysql-service.default.svc.cluster.local"
+  MYSQL_USER: "sumit"
+  MYSQL_DB: "hello-sql"
