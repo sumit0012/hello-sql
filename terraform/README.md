@@ -1,9 +1,9 @@
-# Terraform for Private AKS Cluster in Azure
+# Terraform for AKS Cluster in Azure
 
-This repository contains the Terraform configuration files to provision a **private AKS cluster** in Azure with the following setup:
+This repository contains the Terraform configuration files to provision a **AKS cluster** in Azure with the following setup:
 - Resource Group creation
 - Virtual Network (VNet) and Subnet configuration
-- Private AKS Cluster setup
+- AKS Cluster setup
 - Outputs for credentials and resource details
 
 ## Prerequisites
@@ -18,8 +18,8 @@ This repository contains the Terraform configuration files to provision a **priv
 Clone this repository to your local machine:
 
 ```bash
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/sumit0012/hello-sql.git
+cd hello-sql
 
 ### Step 2: Configure Terraform Variables
 
@@ -27,16 +27,16 @@ cd <repository-directory>
 subscription_id = "<your-subscription-id>"
 
 # Resource Group Name
-resource_group_name = "my-aks-rg"
+resource_group_name = "hello-world-rg"
 
 # Location for Azure resources
 location = "East US"
 
 # Virtual Network Name
-vnet_name = "my-vnet"
+vnet_name = "hello-world-vnet"
 
 # Subnet Name for AKS
-subnet_name = "aks-subnet"
+subnet_name = "hello-world-subnet"
 
 # AKS Cluster Name
 aks_cluster_name = "hello-world-aks"

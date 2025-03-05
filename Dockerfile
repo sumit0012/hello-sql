@@ -5,7 +5,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY . /app
+COPY app /app
 
 # Install the required Python packages
 RUN pip install --no-cache-dir -r requirements.txt
@@ -14,10 +14,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8080
 
 # Set environment variables (can be overridden at runtime)
-ENV DB_HOST=mysql-service.default.svc.cluster.local
+ENV DB_HOST=mysql.hwsql.svc.cluster.local
 ENV DB_ROOT_USER=root
 ENV DB_ROOT_PASSWORD=sam123
-ENV DB_NAME=hello-sql
+ENV DB_NAME=hello_sql
 ENV NEW_USER=sumit
 ENV NEW_PASSWORD=sumit123
 
