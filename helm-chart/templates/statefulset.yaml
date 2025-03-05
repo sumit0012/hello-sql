@@ -42,7 +42,7 @@ spec:
         name: mysql-persistent-storage
       spec:
         accessModes: ["ReadWriteOnce"]  # AzureFile supports RWX too
-        storageClassName: azurefile-sc  # Add this line
+        #storageClassName: azurefile-sc  # Add this line
         resources:
           requests:
             storage: {{ .Values.mysql.storageSize }}

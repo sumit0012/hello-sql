@@ -10,9 +10,9 @@ mysql:
   rootPassword: "sam123"
   user: "sumit"
   userPassword: "sumit123"
-  database: "hello-sql"
-  storageSize: "1Gi"
-  storageClass: "azurefile-sc"
+  database: "hello_sql"
+  storageSize: "4Gi"
+  #storageClass: "azurefile-sc"
 
 ingress:
   enabled: true

@@ -13,6 +13,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ .Values.app.name }}-service
+                name: {{ .Values.app.name }}
                 port:
                   number: 8080
