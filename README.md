@@ -6,4 +6,4 @@
 
 ## Build the Docker Image
 ```sh
-docker build -t my-hello-world-app .
+docker build -t sam3ctc/hello-world-app .
