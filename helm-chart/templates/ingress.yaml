@@ -1,18 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.app.name }}-ingress
+  name: sumit-test-ingress
+  namespace: hwsql
   annotations:
-    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
+  tls:
+    - hosts:
+        - sumit.cfs.in.net
+      secretName: sumit-test-cert-secret  # Correct indentation
+
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: sumit.cfs.in.net
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: {{ .Values.app.name }}
+                name: hello-world
                 port:
                   number: 8080
